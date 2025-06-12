@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "drones": "ドローン",
+    "robots": "ロボット",
+    "search": "製品を検索...",
+    "language": "言語",
+    "theme": "テーマ"
+  },
+  "categories": {
+    "drones": "ドローン",
+    "robots": "ロボット",
+    "agricultural": "農業用",
+    "industrial": "産業用",
+    "other": "その他"
+  },
+  "product": {
+    "specifications": "仕様",
+    "features": "特徴",
+    "inquireNow": "お問い合わせ",
+    "relatedProducts": "関連製品",
+    "price": "価格",
+    "category": "カテゴリー",
+    "tags": "タグ"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "データの読み込みエラー",
+    "noResults": "製品が見つかりません",
+    "filter": "フィルター",
+    "sort": "並び替え",
+    "clear": "クリア"
+  },
+  "footer": {
+    "company": "TechDrone Solutions",
+    "description": "商業・産業用途向けの先進的なドローンおよびロボティクスソリューションの主要プロバイダー。",
+    "contact": "お問い合わせ",
+    "about": "会社概要",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約"
+  }
+}

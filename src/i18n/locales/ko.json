@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "home": "홈",
+    "drones": "드론",
+    "robots": "로봇",
+    "search": "제품 검색...",
+    "language": "언어",
+    "theme": "테마"
+  },
+  "categories": {
+    "drones": "드론",
+    "robots": "로봇",
+    "agricultural": "농업용",
+    "industrial": "산업용",
+    "other": "기타"
+  },
+  "product": {
+    "specifications": "사양",
+    "features": "특징",
+    "inquireNow": "문의하기",
+    "relatedProducts": "관련 제품",
+    "price": "가격",
+    "category": "카테고리",
+    "tags": "태그"
+  },
+  "common": {
+    "loading": "로딩 중...",
+    "error": "데이터 로딩 오류",
+    "noResults": "제품을 찾을 수 없습니다",
+    "filter": "필터",
+    "sort": "정렬",
+    "clear": "지우기"
+  },
+  "footer": {
+    "company": "TechDrone Solutions",
+    "description": "상업 및 산업 애플리케이션을 위한 고급 드론 및 로보틱스 솔루션의 선도적 공급업체.",
+    "contact": "문의하기",
+    "about": "회사 소개",
+    "privacy": "개인정보 처리방침",
+    "terms": "서비스 약관"
+  }
+}

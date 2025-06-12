@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "drones": "Drohnen",
+    "robots": "Roboter",
+    "search": "Produkte suchen...",
+    "language": "Sprache",
+    "theme": "Design"
+  },
+  "categories": {
+    "drones": "Drohnen",
+    "robots": "Roboter",
+    "agricultural": "Landwirtschaftlich",
+    "industrial": "Industriell",
+    "other": "Andere"
+  },
+  "product": {
+    "specifications": "Spezifikationen",
+    "features": "Eigenschaften",
+    "inquireNow": "Jetzt Anfragen",
+    "relatedProducts": "Ähnliche Produkte",
+    "price": "Preis",
+    "category": "Kategorie",
+    "tags": "Tags"
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Fehler beim Laden der Daten",
+    "noResults": "Keine Produkte gefunden",
+    "filter": "Filter",
+    "sort": "Sortieren",
+    "clear": "Löschen"
+  },
+  "footer": {
+    "company": "TechDrone Solutions",
+    "description": "Führender Anbieter fortschrittlicher Drohnen- und Robotiklösungen für kommerzielle und industrielle Anwendungen.",
+    "contact": "Kontaktieren Sie uns",
+    "about": "Über uns",
+    "privacy": "Datenschutzrichtlinie",
+    "terms": "Nutzungsbedingungen"
+  }
+}
