@@ -58,6 +58,8 @@ const ProductDetailPage: React.FC = () => {
       
       if (productData) {
         setProduct(productData);
+        // Store product name in localStorage for breadcrumb
+        localStorage.setItem(`productName-${productId}`, productData.name);
         // Load related products
         const related = await ProductService.getRelatedProducts(
           productId, 
