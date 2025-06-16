@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Zap, Cpu } from 'lucide-react';
-import { LANGUAGE_CONFIG, getCurrentLanguage, buildLanguageUrl, type SupportedLanguage } from '../../utils/languageUtils';
+import { LANGUAGE_CONFIG, getCurrentLanguage, buildLanguageUrl, redirectToLanguage, type SupportedLanguage } from '../../utils/languageUtils';
 
 const { Header: AntHeader } = Layout;
 const { Option } = Select;
@@ -37,9 +37,8 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
       const newUrl = buildLanguageUrl(language);
       window.location.href = newUrl;
     } else {
-      // 生产环境：使用i18n切换方式
-      // 因为现在使用www.partdro.com作为主域名，不再使用语言子域名
-      i18n.changeLanguage(language);
+      // 生产环境：重定向到语言子域名
+      redirectToLanguage(language);
     }
   };
 
