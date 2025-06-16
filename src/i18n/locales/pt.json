@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "home": "Início",
+    "drones": "Drones",
+    "robots": "Robôs",
+    "search": "Pesquisar produtos...",
+    "language": "Idioma",
+    "theme": "Tema"
+  },
+  "categories": {
+    "drones": "Drones",
+    "robots": "Robôs",
+    "agricultural": "Agrícola",
+    "industrial": "Industrial",
+    "other": "Outros"
+  },
+  "product": {
+    "specifications": "Especificações",
+    "features": "Características",
+    "inquireNow": "Consultar Agora",
+    "relatedProducts": "Produtos Relacionados",
+    "price": "Preço",
+    "category": "Categoria",
+    "tags": "Tags"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro ao carregar dados",
+    "noResults": "Nenhum produto encontrado",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "clear": "Limpar"
+  },
+  "footer": {
+    "company": "TechDrone Solutions",
+    "description": "Fornecedor líder de soluções avançadas de drones e robótica para aplicações comerciais e industriais.",
+    "contact": "Entre em Contato",
+    "about": "Sobre",
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço",
+    "address": "Shijijinyuan, Área da Baía de Hangzhou, Cidade de Ningbo, Província de Zhejiang, China"
+  }
+}

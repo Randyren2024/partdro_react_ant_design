@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Zap, Cpu } from 'lucide-react';
+import { LANGUAGE_CONFIG, getCurrentLanguage, buildLanguageUrl, type SupportedLanguage } from '../../utils/languageUtils';
 
 const { Header: AntHeader } = Layout;
 const { Option } = Select;
@@ -21,14 +22,26 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
   const location = useLocation();
   const [mobileMenuVisible, setMobileMenuVisible] = React.useState(false);
 
-  const languages = [
-    { code: 'en', name: 'English' },
-    { code: 'es', name: 'Español' },
-    { code: 'de', name: 'Deutsch' },
-    { code: 'ja', name: '日本語' },
-    { code: 'ko', name: '한국어' },
-    { code: 'th', name: 'ไทย' },
-  ];
+  const languages = Object.entries(LANGUAGE_CONFIG).map(([code, config]) => ({
+    code: code as SupportedLanguage,
+    name: config.nativeName,
+  }));
+
+  const currentLanguage = getCurrentLanguage();
+
+  const handleLanguageChange = (language: SupportedLanguage) => {
+    const { hostname } = window.location;
+    
+    // 本地开发环境：使用URL参数重定向
+    if (hostname === 'localhost' || hostname.startsWith('127.0.0.1') || hostname.startsWith('192.168.')) {
+      const newUrl = buildLanguageUrl(language);
+      window.location.href = newUrl;
+    } else {
+      // 生产环境：使用i18n切换方式
+      // 因为现在使用www.partdro.com作为主域名，不再使用语言子域名
+      i18n.changeLanguage(language);
+    }
+  };
 
   const menuItems = [
     {
@@ -94,8 +107,8 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
         <Space size="middle">
           {/* Language Selector */}
           <Select
-            value={i18n.language}
-            onChange={(value) => i18n.changeLanguage(value)}
+            value={currentLanguage}
+            onChange={handleLanguageChange}
             className="w-24"
             size="middle"
             suffixIcon={<GlobalOutlined />}

@@ -1,0 +1,19 @@
+# Cloudflare Pages 重定向规则
+# 重定向所有子域名到www主域名
+
+# 重定向主域名到www
+https://partdro.com/* https://www.partdro.com/:splat 301
+
+# 重定向所有语言子域名到www主域名
+https://en.partdro.com/* https://www.partdro.com/:splat 301
+https://es.partdro.com/* https://www.partdro.com/:splat 301
+https://de.partdro.com/* https://www.partdro.com/:splat 301
+https://ja.partdro.com/* https://www.partdro.com/:splat 301
+https://ko.partdro.com/* https://www.partdro.com/:splat 301
+https://th.partdro.com/* https://www.partdro.com/:splat 301
+
+# 处理其他无效的子域名 - 重定向到www
+https://*.partdro.com/* https://www.partdro.com/:splat 301
+
+# SPA 路由支持 - 所有未匹配的路径都返回 index.html
+/* /index.html 200

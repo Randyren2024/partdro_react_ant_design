@@ -1,6 +1,7 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout, Spin } from 'antd';
+import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
@@ -10,6 +11,10 @@ import ProductListPage from './pages/ProductListPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
+import { 
+  shouldRedirectToWww, 
+  getWwwUrl 
+} from './utils/languageUtils';
 import './i18n';
 
 const { Content } = Layout;
@@ -21,9 +26,20 @@ function App() {
     setSearchQuery(query);
   };
 
+  // 处理www重定向逻辑
+  useEffect(() => {
+    // 检查是否需要重定向到www域名
+    if (shouldRedirectToWww()) {
+      const wwwUrl = getWwwUrl(window.location.pathname + window.location.search);
+      window.location.href = wwwUrl;
+      return;
+    }
+  }, []);
+
   return (
-    <ThemeProvider>
-      <Router>
+    <HelmetProvider>
+      <ThemeProvider>
+        <Router>
         <Layout className="min-h-screen">
           <Header onSearch={handleSearch} searchValue={searchQuery} />
           <Content className="flex-1">
@@ -47,8 +63,9 @@ function App() {
           <Footer />
           <WhatsAppButton phoneNumber="8613362853598" />
         </Layout>
-      </Router>
-    </ThemeProvider>
+        </Router>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
 
