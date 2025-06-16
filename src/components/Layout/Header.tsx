@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
 import { Zap, Cpu } from 'lucide-react';
-import { LANGUAGE_CONFIG, getCurrentLanguage, buildLanguageUrl, redirectToLanguage, type SupportedLanguage } from '../../utils/languageUtils';
+import { LANGUAGE_CONFIG, getCurrentLanguage, switchLanguage, type SupportedLanguage } from '../../utils/languageUtils';
+import { logLanguageChange } from '../../utils/environmentUtils';
 
 const { Header: AntHeader } = Layout;
 const { Option } = Select;
@@ -30,16 +31,29 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
   const currentLanguage = getCurrentLanguage();
 
   const handleLanguageChange = (language: SupportedLanguage) => {
-    const { hostname } = window.location;
+    const currentLang = getCurrentLanguage();
     
-    // 本地开发环境：使用URL参数重定向
-    if (hostname === 'localhost' || hostname.startsWith('127.0.0.1') || hostname.startsWith('192.168.')) {
-      const newUrl = buildLanguageUrl(language);
-      window.location.href = newUrl;
-    } else {
-      // 生产环境：重定向到语言子域名
-      redirectToLanguage(language);
-    }
+    switchLanguage(language, {
+      fallbackToClientSide: true,
+      onSuccess: () => {
+        // 记录成功的语言切换
+        const method = window.location.hostname === 'localhost' || 
+                      window.location.hostname.startsWith('127.0.0.1') || 
+                      window.location.hostname.startsWith('192.168.') 
+                      ? 'url_param' : 'subdomain';
+        logLanguageChange(currentLang, language, method);
+      },
+      onError: (error) => {
+        console.error('Language change failed:', error);
+        // 最后的回退方案：直接使用i18n
+        try {
+          logLanguageChange(currentLang, language, 'client_side');
+          i18n.changeLanguage(language);
+        } catch (fallbackError) {
+          console.error('All language change methods failed:', fallbackError);
+        }
+      }
+    });
   };
 
   const menuItems = [
