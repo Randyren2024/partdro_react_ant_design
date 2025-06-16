@@ -31,10 +31,46 @@
     "sort": "Sortieren",
     "clear": "Löschen"
   },
+  "home": {
+    "hero": {
+      "title": "Verwirklichen Sie Ihre Vision mit",
+      "brand": "partdro",
+      "subtitle": "Entdecken Sie unsere innovativen Drohnen- und Robotiklösungen, entwickelt für Präzision, Leistung und Zuverlässigkeit in verschiedenen Branchen.",
+      "exploreDrones": "Drohnen Erkunden",
+      "viewRobots": "Roboter Ansehen"
+    },
+    "features": {
+      "title": "Warum partdro wählen?",
+      "subtitle": "Wir liefern Exzellenz in jedem Produkt und kombinieren Innovation mit Zuverlässigkeit, um den Anforderungen moderner Industrien gerecht zu werden.",
+      "advancedTech": {
+        "title": "Fortschrittliche Technologie",
+        "description": "Modernste Drohnen und Roboter mit neuester KI-Integration"
+      },
+      "industrialGrade": {
+        "title": "Industriequalität",
+        "description": "Entwickelt für professionelle und industrielle Anwendungen"
+      },
+      "customizable": {
+        "title": "Anpassbar",
+        "description": "Maßgeschneiderte Lösungen für Ihre spezifischen Anforderungen"
+      },
+      "globalSupport": {
+        "title": "Globaler Support",
+        "description": "Weltweites Service- und Support-Netzwerk"
+      }
+    },
+    "categories": {
+      "title": "Produktkategorien",
+      "subtitle": "Entdecken Sie unser umfassendes Sortiment an professionellen Drohnen und fortschrittlichen Robotiklösungen.",
+      "dronesDescription": "Professionelle Drohnen für Landwirtschaft, Vermessung und industrielle Anwendungen",
+      "robotsDescription": "Fortschrittliche Robotiklösungen für Automatisierung und spezialisierte Aufgaben",
+      "explore": "Erkunden"
+    }
+  },
   "footer": {
     "company": "TechDrone Solutions",
     "description": "Führender Anbieter fortschrittlicher Drohnen- und Robotiklösungen für kommerzielle und industrielle Anwendungen.",
-    "contact": "Kontaktieren Sie uns",
+    "contact": "Kontakt",
     "about": "Über uns",
     "privacy": "Datenschutzrichtlinie",
     "terms": "Nutzungsbedingungen"

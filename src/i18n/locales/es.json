@@ -31,6 +31,42 @@
     "sort": "Ordenar",
     "clear": "Limpiar"
   },
+  "home": {
+    "hero": {
+      "title": "Potenciando Tu Visión con",
+      "brand": "partdro",
+      "subtitle": "Explora nuestras soluciones innovadoras de drones y robótica, diseñadas para precisión, rendimiento y confiabilidad en diversas industrias.",
+      "exploreDrones": "Explorar Drones",
+      "viewRobots": "Ver Robots"
+    },
+    "features": {
+      "title": "¿Por qué elegir partdro?",
+      "subtitle": "Ofrecemos excelencia en cada producto, combinando innovación con confiabilidad para satisfacer las demandas de las industrias modernas.",
+      "advancedTech": {
+        "title": "Tecnología Avanzada",
+        "description": "Drones y robots de vanguardia con la última integración de IA"
+      },
+      "industrialGrade": {
+        "title": "Grado Industrial",
+        "description": "Construidos para aplicaciones profesionales e industriales"
+      },
+      "customizable": {
+        "title": "Personalizable",
+        "description": "Soluciones adaptadas a tus requisitos específicos"
+      },
+      "globalSupport": {
+        "title": "Soporte Global",
+        "description": "Red de servicio y soporte mundial"
+      }
+    },
+    "categories": {
+      "title": "Categorías de Productos",
+      "subtitle": "Explora nuestra amplia gama de drones profesionales y soluciones robóticas avanzadas.",
+      "dronesDescription": "Drones profesionales para agricultura, topografía y aplicaciones industriales",
+      "robotsDescription": "Soluciones robóticas avanzadas para automatización y tareas especializadas",
+      "explore": "Explorar"
+    }
+  },
   "footer": {
     "company": "TechDrone Solutions",
     "description": "Proveedor líder de soluciones avanzadas de drones y robótica para aplicaciones comerciales e industriales.",

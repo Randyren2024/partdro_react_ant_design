@@ -15,37 +15,37 @@ const HomePage: React.FC = () => {
   const features = [
     {
       icon: <Zap className="w-8 h-8 text-cyan-400" />,
-      title: 'Advanced Technology',
-      description: 'Cutting-edge drones and robots with the latest AI integration',
+      title: t('home.features.advancedTech.title'),
+      description: t('home.features.advancedTech.description'),
     },
     {
       icon: <Shield className="w-8 h-8 text-purple-500" />,
-      title: 'Industrial Grade',
-      description: 'Built for professional and industrial applications',
+      title: t('home.features.industrialGrade.title'),
+      description: t('home.features.industrialGrade.description'),
     },
     {
       icon: <Settings className="w-8 h-8 text-cyan-400" />,
-      title: 'Customizable',
-      description: 'Tailored solutions for your specific requirements',
+      title: t('home.features.customizable.title'),
+      description: t('home.features.customizable.description'),
     },
     {
       icon: <Globe className="w-8 h-8 text-purple-500" />,
-      title: 'Global Support',
-      description: 'Worldwide service and support network',
+      title: t('home.features.globalSupport.title'),
+      description: t('home.features.globalSupport.description'),
     },
   ];
 
   const categories = [
     {
       title: t('categories.drones'),
-      description: 'Professional drones for agriculture, surveying, and industrial applications',
+      description: t('home.categories.dronesDescription'),
       image: 'https://images.pexels.com/photos/442587/pexels-photo-442587.jpeg',
       path: '/drones',
       gradient: 'from-cyan-500 to-blue-600',
     },
     {
       title: t('categories.robots'),
-      description: 'Advanced robotics solutions for automation and specialized tasks',
+      description: t('home.categories.robotsDescription'),
       image: 'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg',
       path: '/robots',
       gradient: 'from-purple-500 to-pink-600',
@@ -66,13 +66,13 @@ const HomePage: React.FC = () => {
         </Carousel>
         <div className="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-center p-4">
           <Title level={1} className={`text-5xl md:text-7xl font-bold mb-6 text-white`}>
-            Empowering Your Vision with{' '}
+            {t('home.hero.title')}{' '}
             <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-              partdro
+              {t('home.hero.brand')}
             </span>
           </Title>
           <Paragraph className={`text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-200`}>
-            Explore our innovative drone and robotics solutions, engineered for precision, performance, and reliability across diverse industries.
+            {t('home.hero.subtitle')}
           </Paragraph>
           <Space size="large">
             <Button
@@ -81,14 +81,14 @@ const HomePage: React.FC = () => {
               onClick={() => navigate('/drones')}
               className="bg-gradient-to-r from-cyan-500 to-purple-500 border-none h-12 px-8 text-lg font-semibold"
             >
-              Explore Drones <ArrowRight className="w-5 h-5 ml-2" />
+              {t('home.hero.exploreDrones')} <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
             <Button
               size="large"
               onClick={() => navigate('/robots')}
               className={`h-12 px-8 text-lg font-semibold bg-white/20 text-white border-white/30 hover:bg-white/30`}
             >
-              View Robots
+              {t('home.hero.viewRobots')}
             </Button>
           </Space>
         </div>
@@ -99,11 +99,10 @@ const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <Title level={2} className={`text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              Why Choose partdro?
+              {t('home.features.title')}
             </Title>
             <Paragraph className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
-              We deliver excellence in every product, combining innovation with reliability 
-              to meet the demands of modern industries.
+              {t('home.features.subtitle')}
             </Paragraph>
           </div>
           
@@ -135,10 +134,10 @@ const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <Title level={2} className={`text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-              Product Categories
+              {t('home.categories.title')}
             </Title>
             <Paragraph className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
-              Explore our comprehensive range of professional drones and advanced robotics solutions.
+              {t('home.categories.subtitle')}
             </Paragraph>
           </div>
 
@@ -171,7 +170,7 @@ const HomePage: React.FC = () => {
                             onClick={() => navigate(category.path)}
                             className="bg-white/20 border-white/30 hover:bg-white/30"
                           >
-                            Explore {category.title} <ArrowRight className="w-4 h-4 ml-2" />
+                            {t('home.categories.explore')} {category.title} <ArrowRight className="w-4 h-4 ml-2" />
                           </Button>
                         </div>
                       </div>

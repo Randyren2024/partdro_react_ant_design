@@ -31,13 +31,49 @@
     "sort": "Trier",
     "clear": "Effacer"
   },
-  "footer": {
-    "company": "TechDrone Solutions",
-    "description": "Fournisseur leader de solutions avancées de drones et de robotique pour les applications commerciales et industrielles.",
-    "contact": "Nous Contacter",
-    "about": "À Propos",
-    "privacy": "Politique de Confidentialité",
-    "terms": "Conditions de Service",
-    "address": "Shijijinyuan, Zone de la Baie de Hangzhou, Ville de Ningbo, Province du Zhejiang, Chine"
-  }
-}
+  "home": {
+    "hero": {
+      "title": "Donnez vie à votre vision avec",
+      "brand": "partdro",
+      "subtitle": "Explorez nos solutions innovantes de drones et de robotique, conçues pour la précision, la performance et la fiabilité dans diverses industries.",
+      "exploreDrones": "Explorer les Drones",
+      "viewRobots": "Voir les Robots"
+    },
+    "features": {
+      "title": "Pourquoi choisir partdro ?",
+      "subtitle": "Nous offrons l'excellence dans chaque produit, combinant innovation et fiabilité pour répondre aux exigences des industries modernes.",
+      "advancedTech": {
+        "title": "Technologie Avancée",
+        "description": "Drones et robots de pointe avec la dernière intégration IA"
+      },
+      "industrialGrade": {
+        "title": "Qualité Industrielle",
+        "description": "Conçus pour les applications professionnelles et industrielles"
+      },
+      "customizable": {
+        "title": "Personnalisable",
+        "description": "Solutions adaptées à vos exigences spécifiques"
+      },
+      "globalSupport": {
+        "title": "Support Global",
+        "description": "Réseau de service et support mondial"
+      }
+    },
+    "categories": {
+      "title": "Catégories de Produits",
+      "subtitle": "Explorez notre gamme complète de drones professionnels et de solutions robotiques avancées.",
+      "dronesDescription": "Drones professionnels pour l'agriculture, l'arpentage et les applications industrielles",
+      "robotsDescription": "Solutions robotiques avancées pour l'automatisation et les tâches spécialisées",
+      "explore": "Explorer"
+    }
+  },
+   "footer": {
+     "company": "TechDrone Solutions",
+     "description": "Fournisseur leader de solutions avancées de drones et de robotique pour les applications commerciales et industrielles.",
+     "contact": "Contactez-nous",
+     "about": "À propos",
+     "privacy": "Politique de confidentialité",
+     "terms": "Conditions de service",
+     "address": "Shijijinyuan, Zone de la Baie de Hangzhou, Ville de Ningbo, Province du Zhejiang, Chine"
+   }
+ }
