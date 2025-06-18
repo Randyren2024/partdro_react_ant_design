@@ -161,10 +161,15 @@ export function shouldRedirectToWww(): boolean {
       return false;
     }
 
-    // 如果是语言子域名，需要重定向到www
+    // 如果是英文子域名，需要重定向到www（因为英文是默认语言）
     const currentLang = getLanguageFromSubdomain(hostname);
-    if (currentLang && SUPPORTED_LANGUAGES.includes(currentLang)) {
+    if (currentLang === 'en') {
       return true;
+    }
+    
+    // 如果是其他语言子域名，不重定向（保持语言子域名）
+    if (currentLang && SUPPORTED_LANGUAGES.includes(currentLang)) {
+      return false;
     }
 
     // 如果是主域名（没有子域名），需要重定向到www

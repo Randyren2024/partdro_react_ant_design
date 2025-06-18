@@ -29,8 +29,10 @@ function App() {
   // 处理www重定向逻辑
   useEffect(() => {
     // 检查是否需要重定向到www域名
+    // 注意：语言子域名不应该被重定向到www
     if (shouldRedirectToWww()) {
       const wwwUrl = getWwwUrl(window.location.pathname + window.location.search);
+      console.log('Redirecting to www:', wwwUrl);
       window.location.href = wwwUrl;
       return;
     }

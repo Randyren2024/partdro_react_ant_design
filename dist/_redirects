@@ -1,19 +1,20 @@
 # Cloudflare Pages 重定向规则
-# 重定向所有子域名到www主域名
+# 支持多语言子域名配置
 
-# 重定向主域名到www
+# 重定向主域名到www（保留英文作为默认语言）
 https://partdro.com/* https://www.partdro.com/:splat 301
 
-# 重定向所有语言子域名到www主域名
-https://en.partdro.com/* https://www.partdro.com/:splat 301
-https://es.partdro.com/* https://www.partdro.com/:splat 301
-https://de.partdro.com/* https://www.partdro.com/:splat 301
-https://ja.partdro.com/* https://www.partdro.com/:splat 301
-https://ko.partdro.com/* https://www.partdro.com/:splat 301
-https://th.partdro.com/* https://www.partdro.com/:splat 301
+# 语言子域名保持不变，不进行重定向
+# https://en.partdro.com/* - 英文（重定向到www）
+# https://es.partdro.com/* - 西班牙语（保持）
+# https://de.partdro.com/* - 德语（保持）
+# https://fr.partdro.com/* - 法语（保持）
+# https://ja.partdro.com/* - 日语（保持）
+# https://ko.partdro.com/* - 韩语（保持）
+# https://th.partdro.com/* - 泰语（保持）
 
-# 处理其他无效的子域名 - 重定向到www
-https://*.partdro.com/* https://www.partdro.com/:splat 301
+# 英文子域名重定向到www（因为英文是默认语言）
+https://en.partdro.com/* https://www.partdro.com/:splat 301
 
 # SPA 路由支持 - 所有未匹配的路径都返回 index.html
 /* /index.html 200
