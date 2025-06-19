@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Row, Col, Spin, Empty, Typography, Space, Pagination, message } from 'antd';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import ProductCard from '../components/Product/ProductCard';
 import ProductFilter from '../components/Product/ProductFilter';
 import ProductSort from '../components/Product/ProductSort';
@@ -14,16 +15,24 @@ const { Title } = Typography;
 
 const ProductListPage: React.FC = () => {
   const { category } = useParams<{ category: string }>();
+  const [searchParams] = useSearchParams();
   const { t } = useTranslation();
   const { isDark } = useTheme();
+  const { getLocalizedText, getLocalizedArray } = useLanguage();
+  
+  // Get current category from URL path
+  const currentPath = window.location.pathname;
+  const currentCategory = currentPath.includes('/drones') ? 'drones' : 
+                         currentPath.includes('/robots') ? 'robots' : 
+                         category;
   
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState<FilterOptions>({ category });
+  const [filters, setFilters] = useState<FilterOptions>({ category: currentCategory });
   const [sortBy, setSortBy] = useState('name');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   const [availableTags, setAvailableTags] = useState<string[]>([]);
 
   
@@ -35,17 +44,26 @@ const ProductListPage: React.FC = () => {
     // Update filters when category changes
     setFilters(prevFilters => ({
       ...prevFilters,
-      category: category || undefined
+      category: currentCategory || undefined
     }));
-  }, [category]);
+  }, [currentCategory, searchQuery, sortBy, sortOrder]);
 
   const loadProducts = async () => {
     setLoading(true);
     try {
       let productData: Product[];
       
-      if (category) {
-        productData = await ProductService.getProductsByCategory(category);
+      if (searchQuery) {
+        // 如果有搜索查询，使用搜索功能
+        productData = await ProductService.searchProducts(searchQuery, {
+          category: currentCategory,
+          sortBy,
+          sortOrder
+        });
+      } else if (currentCategory) {
+        // For now, we'll use the category name as category_id
+        // This should be updated when we have proper category mapping
+        productData = await ProductService.getProductsByCategory(currentCategory);
       } else {
         productData = await ProductService.getAllProducts();
       }
@@ -75,11 +93,15 @@ const ProductListPage: React.FC = () => {
 
     // Apply search filter
     if (searchQuery) {
-      result = result.filter(product =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-      );
+      result = result.filter(product => {
+        const localizedName = getLocalizedText(product.name_i18n || {}, product.name);
+        const localizedDescription = getLocalizedText(product.description_i18n || {}, product.description);
+        const localizedTags = getLocalizedArray(product.tags_i18n || {}, product.tags);
+        
+        return localizedName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+               localizedDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
+               localizedTags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+      });
     }
 
     // Apply category filters
@@ -106,7 +128,9 @@ const ProductListPage: React.FC = () => {
       
       switch (sortBy) {
         case 'name':
-          comparison = a.name.localeCompare(b.name);
+          const nameA = getLocalizedText(a.name_i18n || {}, a.name);
+          const nameB = getLocalizedText(b.name_i18n || {}, b.name);
+          comparison = nameA.localeCompare(nameB);
           break;
 
         case 'created_at':

@@ -4,6 +4,7 @@ import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { Product } from '../../types/product';
 
 const { Title, Text } = Typography;
@@ -16,7 +17,14 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { t } = useTranslation();
   const { isDark } = useTheme();
+  const { getLocalizedText, getLocalizedArray } = useLanguage();
   const navigate = useNavigate();
+
+  // 获取本地化内容
+  const localizedName = getLocalizedText(product.name_i18n || {}, product.name);
+  const localizedDescription = getLocalizedText(product.description_i18n || {}, product.description);
+  const localizedTags = getLocalizedArray(product.tags_i18n || {}, product.tags || []);
+  const localizedFeatures = getLocalizedArray(product.features_i18n || {}, product.features || []);
 
   const handleViewProduct = () => {
     navigate(`/product/${product.id}`);
@@ -31,8 +39,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       cover={
         <div className="relative overflow-hidden">
           <Image
-            alt={product.name}
-            src={product.images[0] || 'https://images.pexels.com/photos/442587/pexels-photo-442587.jpeg'}
+            alt={localizedName}
+            src={(product.image_urls && product.image_urls[0]) || (product.images && product.images[0]) || 'https://images.pexels.com/photos/442587/pexels-photo-442587.jpeg'}
             className="w-full h-48 object-cover"
             preview={false}
           />
@@ -74,29 +82,38 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <Meta
         title={
           <Title level={5} className={`mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-            {product.name}
+            {localizedName}
           </Title>
         }
         description={
           <div className="space-y-3">
             <Text className={`${isDark ? 'text-gray-300' : 'text-gray-600'} line-clamp-2`}>
-              {product.description}
+              {localizedDescription}
             </Text>
             
             <div className="flex flex-wrap gap-1">
-              {product.tags.slice(0, 3).map((tag) => (
+              {localizedTags.slice(0, 3).map((tag, index) => (
                 <Tag
-                  key={tag}
+                  key={`${tag}-${index}`}
                   color="cyan"
                   className="text-xs bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border-cyan-400/30"
                 >
                   {tag}
                 </Tag>
               ))}
-              {product.tags.length > 3 && (
-                <Tag className="text-xs">+{product.tags.length - 3}</Tag>
+              {localizedTags.length > 3 && (
+                <Tag className="text-xs">+{localizedTags.length - 3}</Tag>
               )}
             </div>
+
+            {/* 显示价格信息（如果有） */}
+            {product.price && product.currency && (
+              <div className="mt-2">
+                <Text strong className={`text-lg ${isDark ? 'text-cyan-400' : 'text-cyan-600'}`}>
+                  {product.currency} {product.price.toLocaleString()}
+                </Text>
+              </div>
+            )}
 
             <div className="flex justify-between items-center">
 

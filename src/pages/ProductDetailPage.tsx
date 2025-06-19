@@ -25,6 +25,7 @@ import {
 } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import ProductCard from '../components/Product/ProductCard';
 import Breadcrumb from '../components/Layout/Breadcrumb';
 import { Product } from '../types/product';
@@ -35,8 +36,9 @@ const { TextArea } = Input;
 
 const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { isDark } = useTheme();
+  const { getLocalizedText, getLocalizedArray } = useLanguage();
   const navigate = useNavigate();
   
   const [product, setProduct] = useState<Product | null>(null);
@@ -58,8 +60,9 @@ const ProductDetailPage: React.FC = () => {
       
       if (productData) {
         setProduct(productData);
-        // Store product name in localStorage for breadcrumb
-        localStorage.setItem(`productName-${productId}`, productData.name);
+        // Store localized product name in localStorage for breadcrumb
+        const localizedName = getLocalizedText(productData.name_i18n || {}, productData.name);
+        localStorage.setItem(`productName-${productId}`, localizedName);
         // Load related products
         const related = await ProductService.getRelatedProducts(
           productId, 
@@ -181,7 +184,7 @@ const ProductDetailPage: React.FC = () => {
               <div className="flex justify-between items-start mb-4">
                 <div>
                           <Title level={1} className={`mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                {product.name}
+                {getLocalizedText(product.name_i18n || {}, product.name)}
               </Title>
               <Space>
                 <Tag color="blue" className="capitalize">
@@ -218,7 +221,7 @@ const ProductDetailPage: React.FC = () => {
                 Description
               </Title>
               <Paragraph className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-lg leading-relaxed`}>
-                {product.description}
+                {getLocalizedText(product.description_i18n || {}, product.description)}
               </Paragraph>
             </div>
 
@@ -228,9 +231,9 @@ const ProductDetailPage: React.FC = () => {
                 {t('product.tags')}
               </Title>
               <Space wrap>
-                {product.tags.map((tag) => (
+                {getLocalizedArray(product.tags_i18n || {}, product.tags).map((tag, index) => (
                   <Tag
-                    key={tag}
+                    key={`${tag}-${index}`}
                     color="cyan"
                     className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border-cyan-400/30"
                   >
@@ -246,7 +249,7 @@ const ProductDetailPage: React.FC = () => {
                 {t('product.features')}
               </Title>
               <ul className={`${isDark ? 'text-gray-300' : 'text-gray-600'} space-y-2`}>
-                {product.features.map((feature, index) => (
+                {getLocalizedArray(product.features_i18n || {}, product.features).map((feature, index) => (
                   <li key={index} className="flex items-start">
                     <span className="text-cyan-500 mr-2">•</span>
                     {feature}
@@ -287,15 +290,23 @@ const ProductDetailPage: React.FC = () => {
               column={{ xs: 1, sm: 2, lg: 3 }}
               size="middle"
             >
-              {Object.entries(product.specifications || {}).map(([key, value]) => (
-                <Descriptions.Item
-                  key={key}
-                  label={<Text strong>{key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</Text>}
-                  className={isDark ? 'text-gray-300' : 'text-gray-700'}
-                >
-                  {Array.isArray(value) ? value.join(', ') : String(value)}
-                </Descriptions.Item>
-              ))}
+              {(() => {
+                // Get localized specifications based on current language
+                const currentLang = i18n.language;
+                const localizedSpecs = product.specifications_i18n?.[currentLang] || 
+                                     product.specifications_i18n?.['en'] || 
+                                     product.specifications || {};
+                
+                return Object.entries(localizedSpecs).map(([key, value]) => (
+                  <Descriptions.Item
+                    key={key}
+                    label={<Text strong>{key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</Text>}
+                    className={isDark ? 'text-gray-300' : 'text-gray-700'}
+                  >
+                    {Array.isArray(value) ? value.join(', ') : String(value)}
+                  </Descriptions.Item>
+                ));
+              })()}
             </Descriptions>
           </Card>
         </Col>

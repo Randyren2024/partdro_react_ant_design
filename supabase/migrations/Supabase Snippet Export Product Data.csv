@@ -1,0 +1,6 @@
+id,name,parent_id,description,image_url,created_at
+3c366d64-99eb-401d-ad63-6b2b3c1e8327,agricultural,45463463-be31-47e9-ba0d-a5e1bc1886dd,Drones for farming and agriculture,https://images.pexels.com/photos/442587/pexels-photo-442587.jpeg,2025-06-12 11:10:48.473899+00
+45463463-be31-47e9-ba0d-a5e1bc1886dd,drones,null,Professional drones for various applications,https://images.pexels.com/photos/442587/pexels-photo-442587.jpeg,2025-06-12 11:10:34.696477+00
+08428a5a-f501-44f9-9285-bfaeb1837d16,industrial,45463463-be31-47e9-ba0d-a5e1bc1886dd,Industrial and commercial drones,https://images.pexels.com/photos/1472515/pexels-photo-1472515.jpeg,2025-06-12 11:10:48.473899+00
+78098a3f-b0a2-4f43-b634-f5b3e781f210,other,45463463-be31-47e9-ba0d-a5e1bc1886dd,Specialized and other drone applications,https://images.pexels.com/photos/2050718/pexels-photo-2050718.jpeg,2025-06-12 11:10:48.473899+00
+9a4da328-d8fe-49fe-a53a-1966f5fa4180,robots,null,Advanced robotics solutions for automation,https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg,2025-06-12 11:10:34.696477+00

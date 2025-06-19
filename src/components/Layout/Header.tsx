@@ -4,9 +4,9 @@ import { SearchOutlined, GlobalOutlined, BulbOutlined, MenuOutlined } from '@ant
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { Zap, Cpu } from 'lucide-react';
-import { LANGUAGE_CONFIG, getCurrentLanguage, switchLanguage, type SupportedLanguage } from '../../utils/languageUtils';
-import { logLanguageChange } from '../../utils/environmentUtils';
+import LanguageSwitcher from '../common/LanguageSwitcher';
 
 const { Header: AntHeader } = Layout;
 const { Option } = Select;
@@ -23,38 +23,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
   const location = useLocation();
   const [mobileMenuVisible, setMobileMenuVisible] = React.useState(false);
 
-  const languages = Object.entries(LANGUAGE_CONFIG).map(([code, config]) => ({
-    code: code as SupportedLanguage,
-    name: config.nativeName,
-  }));
 
-  const currentLanguage = getCurrentLanguage();
-
-  const handleLanguageChange = (language: SupportedLanguage) => {
-    const currentLang = getCurrentLanguage();
-    
-    switchLanguage(language, {
-      fallbackToClientSide: true,
-      onSuccess: () => {
-        // 记录成功的语言切换
-        const method = window.location.hostname === 'localhost' || 
-                      window.location.hostname.startsWith('127.0.0.1') || 
-                      window.location.hostname.startsWith('192.168.') 
-                      ? 'url_param' : 'subdomain';
-        logLanguageChange(currentLang, language, method);
-      },
-      onError: (error) => {
-        console.error('Language change failed:', error);
-        // 最后的回退方案：直接使用i18n
-        try {
-          logLanguageChange(currentLang, language, 'client_side');
-          i18n.changeLanguage(language);
-        } catch (fallbackError) {
-          console.error('All language change methods failed:', fallbackError);
-        }
-      }
-    });
-  };
 
   const menuItems = [
     {
@@ -119,19 +88,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
         {/* Right Side Controls */}
         <Space size="middle">
           {/* Language Selector */}
-          <Select
-            value={currentLanguage}
-            onChange={handleLanguageChange}
-            className="w-24"
-            size="middle"
-            suffixIcon={<GlobalOutlined />}
-          >
-            {languages.map((lang) => (
-              <Option key={lang.code} value={lang.code}>
-                {lang.name}
-              </Option>
-            ))}
-          </Select>
+          <LanguageSwitcher />
 
           {/* Theme Toggle */}
           <Button

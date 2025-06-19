@@ -3,6 +3,7 @@ import { Typography, Row, Col, Card, Button, Space, Carousel } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { ArrowRight, Zap, Shield, Settings, Globe } from 'lucide-react';
 
 const { Title, Paragraph } = Typography;
@@ -10,6 +11,7 @@ const { Title, Paragraph } = Typography;
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
   const { isDark } = useTheme();
+  const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
 
   const features = [

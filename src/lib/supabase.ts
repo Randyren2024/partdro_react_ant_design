@@ -14,7 +14,11 @@ export type Database = {
           name: string;
           description: string;
           specifications: Record<string, any>;
-        
+          name_i18n?: Record<string, string>;
+          description_i18n?: Record<string, string>;
+          specifications_i18n?: Record<string, Record<string, any>>;
+          features_i18n?: Record<string, string[]>;
+          tags_i18n?: Record<string, string[]>;
           images: string[];
           video_url?: string;
           category: string;
@@ -29,7 +33,11 @@ export type Database = {
           name: string;
           description: string;
           specifications: Record<string, any>;
-        
+          name_i18n?: Record<string, string>;
+          description_i18n?: Record<string, string>;
+          specifications_i18n?: Record<string, Record<string, any>>;
+          features_i18n?: Record<string, string[]>;
+          tags_i18n?: Record<string, string[]>;
           images: string[];
           video_url?: string;
           category: string;
@@ -44,7 +52,11 @@ export type Database = {
           name?: string;
           description?: string;
           specifications?: Record<string, any>;
-        
+          name_i18n?: Record<string, string>;
+          description_i18n?: Record<string, string>;
+          specifications_i18n?: Record<string, Record<string, any>>;
+          features_i18n?: Record<string, string[]>;
+          tags_i18n?: Record<string, string[]>;
           images?: string[];
           video_url?: string;
           category?: string;

@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase';
-import { Product, FilterOptions } from '../types/product';
+import { Product, FilterOptions, Category } from '../types/product';
 
 export class ProductService {
   static async getAllProducts(): Promise<Product[]> {
@@ -34,11 +34,11 @@ export class ProductService {
     return data;
   }
 
-  static async getProductsByCategory(category: string): Promise<Product[]> {
+  static async getProductsByCategory(categoryId: string): Promise<Product[]> {
     const { data, error } = await supabase
       .from('products')
       .select('*')
-      .eq('category', category)
+      .eq('category', categoryId)
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -47,6 +47,37 @@ export class ProductService {
     }
 
     return data || [];
+  }
+
+  // 获取所有分类（包含多语言字段）
+  static async getCategories(): Promise<Category[]> {
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .order('name');
+
+    if (error) {
+      console.error('Error fetching categories:', error);
+      throw error;
+    }
+
+    return data || [];
+  }
+
+  // 使用本地化视图获取产品（如果可用）
+  static async getLocalizedProducts(language: string): Promise<Product[]> {
+    // 首先尝试使用本地化视图
+    const { data: viewData, error: viewError } = await supabase
+      .from('products_localized')
+      .select('*')
+      .eq('language', language);
+
+    if (!viewError && viewData) {
+      return viewData;
+    }
+
+    // 如果视图不可用，回退到常规查询
+    return this.getAllProducts();
   }
 
   static async searchProducts(
@@ -90,11 +121,11 @@ export class ProductService {
     return data || [];
   }
 
-  static async getRelatedProducts(productId: string, category: string, limit: number = 3): Promise<Product[]> {
+  static async getRelatedProducts(productId: string, categoryId: string, limit: number = 3): Promise<Product[]> {
     const { data, error } = await supabase
       .from('products')
       .select('*')
-      .eq('category', category)
+      .eq('category', categoryId)
       .neq('id', productId)
       .limit(limit)
       .order('created_at', { ascending: false });

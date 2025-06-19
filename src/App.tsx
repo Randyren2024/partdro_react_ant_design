@@ -1,8 +1,9 @@
-import React, { Suspense, useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect, Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { Layout, Spin } from 'antd';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 import WhatsAppButton from './components/common/WhatsAppButton';
@@ -24,6 +25,10 @@ function App() {
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
+    // 导航到产品列表页面并传递搜索参数
+    if (query.trim()) {
+      window.location.href = `/drones?search=${encodeURIComponent(query.trim())}`;
+    }
   };
 
   // 处理www重定向逻辑
@@ -40,8 +45,9 @@ function App() {
 
   return (
     <HelmetProvider>
-      <ThemeProvider>
-        <Router>
+      <LanguageProvider>
+        <ThemeProvider>
+          <Router>
         <Layout className="min-h-screen">
           <Header onSearch={handleSearch} searchValue={searchQuery} />
           <Content className="flex-1">
@@ -65,8 +71,9 @@ function App() {
           <Footer />
           <WhatsAppButton phoneNumber="8613362853598" />
         </Layout>
-        </Router>
-      </ThemeProvider>
+          </Router>
+        </ThemeProvider>
+      </LanguageProvider>
     </HelmetProvider>
   );
 }
