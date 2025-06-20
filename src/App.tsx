@@ -20,14 +20,15 @@ import './i18n';
 
 const { Content } = Layout;
 
-function App() {
+function AppContent() {
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     // 导航到产品列表页面并传递搜索参数
     if (query.trim()) {
-      window.location.href = `/drones?search=${encodeURIComponent(query.trim())}`;
+      navigate(`/drones?search=${encodeURIComponent(query.trim())}`);
     }
   };
 
@@ -44,10 +45,6 @@ function App() {
   }, []);
 
   return (
-    <HelmetProvider>
-      <LanguageProvider>
-        <ThemeProvider>
-          <Router>
         <Layout className="min-h-screen">
           <Header onSearch={handleSearch} searchValue={searchQuery} />
           <Content className="flex-1">
@@ -71,6 +68,16 @@ function App() {
           <Footer />
           <WhatsAppButton phoneNumber="8613362853598" />
         </Layout>
+  );
+}
+
+function App() {
+  return (
+    <HelmetProvider>
+      <LanguageProvider>
+        <ThemeProvider>
+          <Router>
+            <AppContent />
           </Router>
         </ThemeProvider>
       </LanguageProvider>

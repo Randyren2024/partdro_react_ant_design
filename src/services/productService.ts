@@ -117,39 +117,126 @@ export class ProductService {
     sortBy: string = 'name',
     sortOrder: 'asc' | 'desc' = 'asc'
   ): Promise<Product[]> {
-    let query = supabase.from('products').select('*');
-
-    // Apply search query using full-text search
-    if (searchQuery) {
-      query = query.textSearch('name,description,tags', searchQuery);
+    if (!searchQuery.trim()) {
+      // 如果没有搜索查询，返回所有产品
+      return this.getAllProducts();
     }
 
-    // Apply category filter
+    // 尝试多种搜索策略以实现模糊搜索
+    const searchTerms = searchQuery.toLowerCase().trim();
+    
+    // 策略1: 精确全文搜索
+    let exactQuery = supabase.from('products').select('*');
+    exactQuery = exactQuery.textSearch('name,description,tags', searchQuery);
+    
+    // 策略2: 部分匹配搜索
+    let partialQuery = supabase.from('products').select('*');
+    partialQuery = partialQuery.or(
+      `name.ilike.%${searchTerms}%,description.ilike.%${searchTerms}%,tags.cs.{"${searchTerms}"}`
+    );
+    
+    // 策略3: 单词分割搜索
+    const words = searchTerms.split(/\s+/).filter(word => word.length > 1);
+    let wordQuery = supabase.from('products').select('*');
+    if (words.length > 0) {
+      const wordConditions = words.map(word => 
+        `name.ilike.%${word}%,description.ilike.%${word}%,tags.cs.{"${word}"}`
+      ).join(',');
+      wordQuery = wordQuery.or(wordConditions);
+    }
+
+    // 执行所有查询
+    const [exactResult, partialResult, wordResult] = await Promise.all([
+      exactQuery,
+      partialQuery,
+      words.length > 0 ? wordQuery : Promise.resolve({ data: [], error: null })
+    ]);
+
+    // 合并结果并去重
+    const allResults = new Map<number, Product>();
+    
+    // 添加精确匹配结果（最高优先级）
+    if (exactResult.data) {
+      exactResult.data.forEach(product => {
+        allResults.set(product.id, { ...product, searchScore: 3 });
+      });
+    }
+    
+    // 添加部分匹配结果
+    if (partialResult.data) {
+      partialResult.data.forEach(product => {
+        if (!allResults.has(product.id)) {
+          allResults.set(product.id, { ...product, searchScore: 2 });
+        }
+      });
+    }
+    
+    // 添加单词匹配结果
+    if (wordResult.data) {
+      wordResult.data.forEach(product => {
+        if (!allResults.has(product.id)) {
+          allResults.set(product.id, { ...product, searchScore: 1 });
+        }
+      });
+    }
+
+    let products = Array.from(allResults.values());
+
+    // Apply filters
     if (filters.category) {
-      query = query.eq('category', filters.category);
+      products = products.filter(p => p.category === filters.category);
     }
 
-    // Apply subcategory filter
     if (filters.subcategory) {
-      query = query.eq('subcategory', filters.subcategory);
+      products = products.filter(p => p.subcategory === filters.subcategory);
     }
 
-        // Apply tag filters
     if (filters.tags && filters.tags.length > 0) {
-      query = query.overlaps('tags', filters.tags);
+      products = products.filter(p => 
+        p.tags && filters.tags!.some(tag => p.tags.includes(tag))
+      );
     }
 
-    // Apply sorting
-    query = query.order(sortBy, { ascending: sortOrder === 'asc' });
+    // 按搜索相关性和指定字段排序
+    products.sort((a, b) => {
+      // 首先按搜索分数排序
+      const scoreA = (a as any).searchScore || 0;
+      const scoreB = (b as any).searchScore || 0;
+      if (scoreA !== scoreB) {
+        return scoreB - scoreA;
+      }
+      
+      // 然后按指定字段排序
+      const valueA = a[sortBy as keyof Product];
+      const valueB = b[sortBy as keyof Product];
+      
+      if (typeof valueA === 'string' && typeof valueB === 'string') {
+        return sortOrder === 'asc' 
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA);
+      }
+      
+      if (typeof valueA === 'number' && typeof valueB === 'number') {
+        return sortOrder === 'asc' ? valueA - valueB : valueB - valueA;
+      }
+      
+      return 0;
+    });
 
-    const { data, error } = await query;
+    // 清理搜索分数属性
+    products.forEach(product => {
+      delete (product as any).searchScore;
+    });
 
-    if (error) {
-      console.error('Error searching products:', error);
-      throw error;
-    }
+    if (exactResult.error || partialResult.error || wordResult.error) {
+       console.error('Error searching products:', {
+         exact: exactResult.error,
+         partial: partialResult.error,
+         word: wordResult.error
+       });
+     }
 
-    return data || [];
+     return products;
   }
 
   static async getRelatedProducts(productId: string, categoryId: string, limit: number = 3): Promise<Product[]> {
