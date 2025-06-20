@@ -257,6 +257,40 @@ export const subdomainLanguageDetector = {
 };
 
 /**
+ * 记录语言变更日志
+ * @param fromLanguage - 原语言
+ * @param toLanguage - 目标语言
+ * @param method - 切换方法
+ */
+export function logLanguageChange(
+  fromLanguage: SupportedLanguage,
+  toLanguage: SupportedLanguage,
+  method: 'subdomain' | 'client' | 'url_param' = 'subdomain'
+): void {
+  try {
+    const logData = {
+      timestamp: new Date().toISOString(),
+      fromLanguage,
+      toLanguage,
+      method,
+      hostname: window.location.hostname,
+      userAgent: navigator.userAgent,
+      isLocalEnvironment: isLocalEnvironment()
+    };
+    
+    console.log('Language change:', logData);
+    
+    // 在生产环境中，可以发送到分析服务
+    if (!isLocalEnvironment()) {
+      // 这里可以添加发送到分析服务的代码
+      // 例如: analytics.track('language_change', logData);
+    }
+  } catch (error) {
+    logError(error as Error, `Failed to log language change from ${fromLanguage} to ${toLanguage}`);
+  }
+}
+
+/**
  * 统一的语言切换策略
  * @param language - 目标语言
  * @param options - 选项
