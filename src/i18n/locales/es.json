@@ -28,7 +28,8 @@
     "noResults": "No se encontraron productos",
     "filter": "Filtrar",
     "sort": "Ordenar",
-    "clear": "Limpiar"
+    "clear": "Limpiar",
+    "searching": "Buscando..."
   },
   "home": {
     "hero": {

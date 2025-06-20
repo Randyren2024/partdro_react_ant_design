@@ -20,7 +20,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
@@ -125,11 +125,9 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
             onSelect={handleSearchSelect}
             placeholder={t('nav.search')}
             className="w-full"
-            notFoundContent={isSearching ? '搜索中...' : null}
-            allowClear
+            notFoundContent={isSearching ? t('searching') : null}
           >
             <Input
-              prefix={<SearchOutlined className="text-neutral-400" />}
               onPressEnter={(e) => {
                 const target = e.target as HTMLInputElement;
                 if (target.value.trim()) {
@@ -170,7 +168,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
       <div className="md:hidden px-4 pb-3">
         <Input
           placeholder={t('nav.search')}
-          prefix={<SearchOutlined className="text-gray-400" />}
           value={searchValue}
           onChange={(e) => onSearch(e.target.value)}
           onPressEnter={(e) => {

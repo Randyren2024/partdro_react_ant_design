@@ -28,7 +28,8 @@
     "noResults": "製品が見つかりません",
     "filter": "フィルター",
     "sort": "並び替え",
-    "clear": "クリア"
+    "clear": "クリア",
+    "searching": "検索中..."
   },
   "footer": {
     "company": "TechDrone Solutions",

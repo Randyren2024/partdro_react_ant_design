@@ -28,7 +28,8 @@
     "noResults": "Nessun prodotto trovato",
     "filter": "Filtra",
     "sort": "Ordina",
-    "clear": "Cancella"
+    "clear": "Cancella",
+    "searching": "Ricerca in corso..."
   },
   "footer": {
     "company": "TechDrone Solutions",
