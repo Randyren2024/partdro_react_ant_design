@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { redirectToLanguage, logLanguageChange, SupportedLanguage, getCurrentLanguage, SUPPORTED_LANGUAGES } from '../utils/languageUtils';
 
-type Language = 'en' | 'es' | 'fr' | 'de' | 'ja' | 'ko' | 'pt' | 'it';
+type Language = SupportedLanguage;
 
 interface LanguageContextType {
   currentLanguage: Language;
@@ -15,12 +16,8 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { i18n } = useTranslation();
   const [currentLanguage, setCurrentLanguage] = useState<Language>(() => {
-    // 从localStorage获取保存的语言设置，或使用i18n的当前语言
-    const saved = localStorage.getItem('preferred-language');
-    if (saved && ['en', 'es', 'fr', 'de', 'ja', 'ko', 'pt', 'it'].includes(saved)) {
-      return saved as Language;
-    }
-    return (i18n.language as Language) || 'en';
+    // 使用 getCurrentLanguage 函数获取当前语言（支持子域名检测）
+    return getCurrentLanguage();
   });
 
   useEffect(() => {
@@ -31,9 +28,18 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [currentLanguage, i18n]);
 
   const setLanguage = (lang: Language) => {
+    const previousLanguage = currentLanguage;
+    
+    // 记录语言切换日志
+    logLanguageChange(previousLanguage, lang, 'subdomain');
+    
+    // 更新本地状态
     setCurrentLanguage(lang);
     localStorage.setItem('preferred-language', lang);
     i18n.changeLanguage(lang);
+    
+    // 执行子域名重定向
+    redirectToLanguage(lang);
   };
 
   const getLocalizedText = (i18nObject: Record<string, string>, fallback = '') => {
