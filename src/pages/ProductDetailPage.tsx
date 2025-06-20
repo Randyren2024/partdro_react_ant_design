@@ -18,7 +18,6 @@ import {
 } from 'antd';
 import { 
   ArrowLeftOutlined, 
-  ShoppingCartOutlined, 
   HeartOutlined,
   ShareAltOutlined,
   PlayCircleOutlined
@@ -263,7 +262,6 @@ const ProductDetailPage: React.FC = () => {
               <Button
                 type="primary"
                 size="large"
-                icon={<ShoppingCartOutlined />}
                 onClick={() => window.open('https://api.whatsapp.com/send?phone=8613362853598', '_blank')}
                 className="bg-gradient-to-r from-cyan-500 to-purple-500 border-none h-12 px-8 flex-1"
               >
@@ -382,7 +380,7 @@ const ProductDetailPage: React.FC = () => {
           >
             <TextArea
               rows={4}
-              placeholder={`I'm interested in the ${product.name}. Please provide more information about pricing and availability.`}
+              placeholder={`I'm interested in the ${product.name}. Please provide more information about specifications and availability.`}
             />
           </Form.Item>
 

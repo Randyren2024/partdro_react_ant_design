@@ -115,7 +115,6 @@ const HomePage: React.FC = () => {
                   className={`h-full text-center transition-transform duration-300 hover:scale-105 ${
                     isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
                   }`}
-                  bordered={false}
                 >
                   <div className="mb-4">{feature.icon}</div>
                   <Title level={4} className={`mb-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>

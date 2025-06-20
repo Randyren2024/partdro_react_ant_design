@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Menu, Input, Select, Button, Space, Drawer } from 'antd';
-import { SearchOutlined, GlobalOutlined, BulbOutlined, MenuOutlined } from '@ant-design/icons';
+import { SearchOutlined, GlobalOutlined, BulbOutlined, MenuOutlined, SunOutlined, MoonOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -77,10 +77,10 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
         <div className="hidden md:block flex-1 max-w-md mx-8">
           <Input
             placeholder={t('nav.search')}
-            prefix={<SearchOutlined className="text-gray-400" />}
+            prefix={<SearchOutlined className="text-neutral-400" />}
             value={searchValue}
             onChange={(e) => onSearch(e.target.value)}
-            className={`rounded-full ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}
+            className={`max-w-md bg-white/90 dark:bg-neutral-800/90 backdrop-blur-md border-neutral-200 dark:border-neutral-600 rounded-lg h-10 font-medium ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}
             size="large"
           />
         </div>
@@ -92,11 +92,11 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
 
           {/* Theme Toggle */}
           <Button
-            icon={<BulbOutlined />}
-            onClick={toggleTheme}
             type="text"
-            className={`${isDark ? 'text-yellow-400 hover:bg-gray-800' : 'text-gray-600 hover:bg-gray-100'}`}
-            title={t('nav.theme')}
+            icon={isDark ? <SunOutlined /> : <MoonOutlined />}
+            onClick={toggleTheme}
+            className="text-neutral-600 dark:text-neutral-300 hover:text-primary-500 dark:hover:text-primary-400 h-10 w-10 flex items-center justify-center rounded-lg"
+            size="large"
           />
 
           {/* Mobile Menu Button */}

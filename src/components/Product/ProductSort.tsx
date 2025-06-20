@@ -23,8 +23,6 @@ const ProductSort: React.FC<ProductSortProps> = ({
   const sortOptions: SortOption[] = [
     { key: 'name', label: 'Name A-Z', value: 'asc' },
     { key: 'name', label: 'Name Z-A', value: 'desc' },
-    { key: 'price', label: 'Price Low-High', value: 'asc' },
-    { key: 'price', label: 'Price High-Low', value: 'desc' },
     { key: 'created_at', label: 'Newest First', value: 'desc' },
     { key: 'created_at', label: 'Oldest First', value: 'asc' },
   ];
