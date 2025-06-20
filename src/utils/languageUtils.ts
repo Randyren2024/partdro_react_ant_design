@@ -35,6 +35,10 @@ export function getLanguageFromSubdomain(hostname: string): SupportedLanguage | 
     const parts = hostname.split('.');
     if (parts.length >= 3) {
       const subdomain = parts[0];
+      // www 子域名对应英文版本
+      if (subdomain === 'www') {
+        return 'en';
+      }
       if (SUPPORTED_LANGUAGES.includes(subdomain as SupportedLanguage)) {
         return subdomain as SupportedLanguage;
       }
@@ -102,13 +106,26 @@ export function buildLanguageUrl(language: SupportedLanguage, path: string = '')
     const parts = hostname.split('.');
     let newHostname: string;
     
-    if (parts.length >= 3) {
-      // 已有子域名，替换第一个部分
-      parts[0] = language;
-      newHostname = parts.join('.');
+    // 英文版本使用 www 子域名
+    if (language === 'en') {
+      if (parts.length >= 3) {
+        // 已有子域名，替换为 www
+        parts[0] = 'www';
+        newHostname = parts.join('.');
+      } else {
+        // 没有子域名，添加 www
+        newHostname = `www.${hostname}`;
+      }
     } else {
-      // 没有子域名，添加语言子域名
-      newHostname = `${language}.${hostname}`;
+      // 其他语言使用语言代码作为子域名
+      if (parts.length >= 3) {
+        // 已有子域名，替换第一个部分
+        parts[0] = language;
+        newHostname = parts.join('.');
+      } else {
+        // 没有子域名，添加语言子域名
+        newHostname = `${language}.${hostname}`;
+      }
     }
 
     return `${protocol}//${newHostname}${path}`;
