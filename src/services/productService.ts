@@ -1,5 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { Product, FilterOptions, Category } from '../types/product';
+import { isUUID } from '../utils/urlUtils';
 
 export class ProductService {
   static async getAllProducts(): Promise<Product[]> {
@@ -32,6 +33,36 @@ export class ProductService {
     }
 
     return data;
+  }
+
+  static async getProductBySlug(slug: string): Promise<Product | null> {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+
+    if (error) {
+      console.error('Error fetching product by slug:', error);
+      if (error.code === 'PGRST116') {
+        return null; // Product not found
+      }
+      throw error;
+    }
+
+    return data;
+  }
+
+  static async getProductByIdOrSlug(identifier: string): Promise<Product | null> {
+    // First try to get by slug
+    let product = await this.getProductBySlug(identifier);
+    
+    // If not found and identifier looks like UUID, try by ID
+    if (!product && isUUID(identifier)) {
+      product = await this.getProductById(identifier);
+    }
+    
+    return product;
   }
 
   static async getProductsByCategory(categoryId: string): Promise<Product[]> {

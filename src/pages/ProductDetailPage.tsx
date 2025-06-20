@@ -29,6 +29,7 @@ import ProductCard from '../components/Product/ProductCard';
 import Breadcrumb from '../components/Layout/Breadcrumb';
 import { Product } from '../types/product';
 import { ProductService } from '../services/productService';
+import { isUUID } from '../utils/urlUtils';
 
 const { Title, Paragraph, Text } = Typography;
 const { TextArea } = Input;
@@ -50,25 +51,30 @@ const ProductDetailPage: React.FC = () => {
     if (id) {
       loadProduct(id);
     }
-  }, [id]);
+  }, [id, navigate]);
 
-  const loadProduct = async (productId: string) => {
+  const loadProduct = async (identifier: string) => {
     setLoading(true);
     try {
-      const productData = await ProductService.getProductById(productId);
+      const productData = await ProductService.getProductByIdOrSlug(identifier);
       
       if (productData) {
         setProduct(productData);
         // Store localized product name in localStorage for breadcrumb
         const localizedName = getLocalizedText(productData.name_i18n || {}, productData.name);
-        localStorage.setItem(`productName-${productId}`, localizedName);
+        localStorage.setItem(`productName-${productData.id}`, localizedName);
         // Load related products
         const related = await ProductService.getRelatedProducts(
-          productId, 
+          productData.id, 
           productData.category, 
           3
         );
         setRelatedProducts(related);
+        
+        // If accessed by UUID but product has slug, redirect to slug URL
+        if (productData.slug && identifier !== productData.slug && isUUID(identifier)) {
+          navigate(`/product/${productData.slug}`, { replace: true });
+        }
       }
     } catch (error) {
       console.error('Error loading product:', error);

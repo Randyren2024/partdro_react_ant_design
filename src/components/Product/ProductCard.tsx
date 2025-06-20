@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { Product } from '../../types/product';
+import { getProductUrl } from '../../utils/urlUtils';
 
 const { Title, Text, Paragraph } = Typography;
 const { Meta } = Card;
@@ -27,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const localizedFeatures = getLocalizedArray(product.features_i18n || {}, product.features || []);
 
   const handleViewProduct = () => {
-    navigate(`/product/${product.id}`);
+    navigate(getProductUrl(product));
   };
 
   return (
