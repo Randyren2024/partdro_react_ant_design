@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Layout, Menu, Input, Select, Button, Space, Drawer, AutoComplete } from 'antd';
-import { SearchOutlined, GlobalOutlined, BulbOutlined, MenuOutlined, SunOutlined, MoonOutlined } from '@ant-design/icons';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Layout, Menu, Input, Select, Button, Space, Drawer, AutoComplete, Avatar, Modal, Dropdown } from 'antd';
+import { SearchOutlined, GlobalOutlined, BulbOutlined, MenuOutlined, SunOutlined, MoonOutlined, UserOutlined, SettingOutlined, LogoutOutlined, LoginOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { Zap, Cpu } from 'lucide-react';
 import LanguageSwitcher from '../common/LanguageSwitcher';
+import LoginForm from '../auth/LoginForm';
 import { ProductService } from '../../services/productService';
 import { Product } from '../../types/product';
 import { debounce } from 'lodash';
@@ -25,8 +27,10 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [searchSuggestions, setSearchSuggestions] = useState<{value: string, label: string}[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const { user, isAdmin, signOut } = useAuth();
 
   // 防抖搜索函数
   const debouncedSearch = useCallback(
@@ -66,6 +70,19 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
   const handleSearchSelect = (value: string) => {
     onSearch(value);
     setSearchSuggestions([]);
+    // 导航到搜索结果页面
+    if (value.trim()) {
+      navigate(`/drones?search=${encodeURIComponent(value.trim())}`);
+    }
+  };
+
+  // 处理回车键搜索
+  const handleSearchEnter = (value: string) => {
+    if (value.trim()) {
+      onSearch(value);
+      setSearchSuggestions([]);
+      navigate(`/drones?search=${encodeURIComponent(value.trim())}`);
+    }
   };
 
   const menuItems = [
@@ -87,6 +104,30 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
   ];
 
   const currentPath = location.pathname;
+
+  // 用户菜单项
+  const userMenuItems = [
+    ...(isAdmin ? [
+      {
+        key: 'admin-products',
+        label: '产品管理',
+        icon: <SettingOutlined />,
+        onClick: () => navigate('/admin/products'),
+      },
+      {
+        key: 'divider1',
+        type: 'divider' as const,
+      },
+    ] : []),
+    {
+      key: 'logout',
+      label: '退出登录',
+      icon: <LogoutOutlined />,
+      onClick: () => {
+        signOut();
+      },
+    },
+  ];
 
   return (
     <AntHeader className={`sticky top-0 z-50 shadow-lg ${isDark ? 'bg-gray-900/95' : 'bg-white/95'} backdrop-blur-md border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
@@ -130,9 +171,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
             <Input
               onPressEnter={(e) => {
                 const target = e.target as HTMLInputElement;
-                if (target.value.trim()) {
-                  handleSearchSelect(target.value);
-                }
+                handleSearchEnter(target.value);
               }}
               className={`max-w-md bg-white/90 dark:bg-neutral-800/90 backdrop-blur-md border-neutral-200 dark:border-neutral-600 rounded-lg h-10 font-medium ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}
               size="large"
@@ -154,6 +193,24 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
             size="large"
           />
 
+          {/* User Menu */}
+          {user ? (
+            <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+              <Button type="text" className="flex items-center">
+                <Avatar size="small" icon={<UserOutlined />} className="mr-1" />
+                <span className="hidden sm:inline">{user.email?.split('@')[0]}</span>
+              </Button>
+            </Dropdown>
+          ) : (
+            <Button
+              type="text"
+              icon={<LoginOutlined />}
+              onClick={() => setLoginModalVisible(true)}
+            >
+              <span className="hidden sm:inline">管理员登录</span>
+            </Button>
+          )}
+
           {/* Mobile Menu Button */}
           <Button
             icon={<MenuOutlined />}
@@ -172,9 +229,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
           onChange={(e) => onSearch(e.target.value)}
           onPressEnter={(e) => {
             const target = e.target as HTMLInputElement;
-            if (target.value.trim()) {
-              onSearch(target.value);
-            }
+            handleSearchEnter(target.value);
           }}
           className={`rounded-full ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}
         />
@@ -195,6 +250,21 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchValue }) => {
           className="border-none"
         />
       </Drawer>
+
+      {/* Login Modal */}
+      <Modal
+        title={null}
+        open={loginModalVisible}
+        onCancel={() => setLoginModalVisible(false)}
+        footer={null}
+        width={400}
+        centered
+      >
+        <LoginForm
+          onSuccess={() => setLoginModalVisible(false)}
+          onCancel={() => setLoginModalVisible(false)}
+        />
+      </Modal>
     </AntHeader>
   );
 };

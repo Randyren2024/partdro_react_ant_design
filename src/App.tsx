@@ -4,6 +4,7 @@ import { Layout, Spin } from 'antd';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 import WhatsAppButton from './components/common/WhatsAppButton';
@@ -12,6 +13,10 @@ import ProductListPage from './pages/ProductListPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
+import EditorPage from './pages/EditorPage';
+import ProductEditPage from './pages/ProductEditPage';
+import UnifiedProductEditPage from './pages/UnifiedProductEditPage';
+import ProductManagePage from './pages/ProductManagePage';
 import { 
   shouldRedirectToWww, 
   getWwwUrl 
@@ -62,6 +67,11 @@ function AppContent() {
                 <Route path="/product/:id" element={<ProductDetailPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
                 <Route path="/terms" element={<TermsPage />} />
+                <Route path="/editor" element={<EditorPage />} />
+                <Route path="/admin/products" element={<ProductManagePage />} />
+                <Route path="/admin/products/new/edit" element={<UnifiedProductEditPage />} />
+                <Route path="/admin/products/:id/edit" element={<UnifiedProductEditPage />} />
+                <Route path="/admin/products/legacy/:id/edit" element={<ProductEditPage />} />
               </Routes>
             </Suspense>
           </Content>
@@ -76,9 +86,11 @@ function App() {
     <HelmetProvider>
       <LanguageProvider>
         <ThemeProvider>
-          <Router>
-            <AppContent />
-          </Router>
+          <AuthProvider>
+            <Router>
+              <AppContent />
+            </Router>
+          </AuthProvider>
         </ThemeProvider>
       </LanguageProvider>
     </HelmetProvider>

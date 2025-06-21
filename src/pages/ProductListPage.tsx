@@ -38,6 +38,12 @@ const ProductListPage: React.FC = () => {
   
   const pageSize = 12;
 
+  // 监听URL搜索参数变化
+  useEffect(() => {
+    const urlSearchQuery = searchParams.get('search') || '';
+    setSearchQuery(urlSearchQuery);
+  }, [searchParams]);
+
   useEffect(() => {
     loadProducts();
     loadFilterData();

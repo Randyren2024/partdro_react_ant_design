@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font optimization and rendering */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'pnum' 1, 'tnum' 0, 'onum' 1, 'lnum' 0, 'dlig' 0;
+  font-variant-ligatures: common-ligatures;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+}
+
+/* Improved text selection */
+::selection {
+  background-color: rgba(0, 212, 255, 0.2);
+  color: inherit;
+}
+
+::-moz-selection {
+  background-color: rgba(0, 212, 255, 0.2);
+  color: inherit;
+}
+
 /* Custom styles for dark mode */
 html.dark {
   color-scheme: dark;
@@ -96,6 +120,49 @@ html.dark {
 
 .text-secondary {
   color: #6366f1;
+}
+
+/* Typography utilities */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+.font-feature-tabular {
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.font-feature-proportional {
+  font-feature-settings: 'pnum' 1, 'onum' 1;
+  font-variant-numeric: proportional-nums oldstyle-nums;
+}
+
+.font-feature-small-caps {
+  font-feature-settings: 'smcp' 1;
+  font-variant-caps: small-caps;
+}
+
+/* Improved heading styles */
+h1, h2, h3, h4, h5, h6 {
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'dlig' 1;
+  font-variant-ligatures: common-ligatures discretionary-ligatures;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+/* Better paragraph spacing */
+p {
+  hanging-punctuation: first last;
+}
+
+/* Code font optimization */
+code, pre, kbd, samp {
+  font-feature-settings: 'kern' 0, 'liga' 0, 'calt' 0;
+  font-variant-ligatures: none;
 }
 
 /* Enhanced button styles */

@@ -271,5 +271,96 @@ export class ProductService {
     return Array.from(new Set(allTags)).sort();
   }
 
+  // 创建新产品
+  static async createProduct(productData: Omit<Product, 'id' | 'created_at' | 'updated_at'>): Promise<Product> {
+    const { data, error } = await supabase
+      .from('products')
+      .insert({
+        ...productData,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating product:', error);
+      throw error;
+    }
+
+    return data;
+  }
+
+  // 更新产品
+  static async updateProduct(id: string, productData: Partial<Omit<Product, 'id' | 'created_at'>>): Promise<Product> {
+    const { data, error } = await supabase
+      .from('products')
+      .update({
+        ...productData,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating product:', error);
+      throw error;
+    }
+
+    return data;
+  }
+
+  // 删除产品
+  static async deleteProduct(id: string): Promise<void> {
+    const { error } = await supabase
+      .from('products')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error deleting product:', error);
+      throw error;
+    }
+  }
+
+  // 上传产品图片
+  static async uploadProductImage(file: File, productId: string): Promise<string> {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${productId}/${Date.now()}.${fileExt}`;
+    const filePath = `products/${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('product-images')
+      .upload(filePath, file);
+
+    if (uploadError) {
+      console.error('Error uploading image:', uploadError);
+      throw uploadError;
+    }
+
+    const { data } = supabase.storage
+      .from('product-images')
+      .getPublicUrl(filePath);
+
+    return data.publicUrl;
+  }
+
+  // 删除产品图片
+  static async deleteProductImage(imageUrl: string): Promise<void> {
+    // 从URL中提取文件路径
+    const url = new URL(imageUrl);
+    const pathParts = url.pathname.split('/');
+    const filePath = pathParts.slice(-2).join('/'); // 获取 productId/filename.ext
+
+    const { error } = await supabase.storage
+      .from('product-images')
+      .remove([`products/${filePath}`]);
+
+    if (error) {
+      console.error('Error deleting image:', error);
+      throw error;
+    }
+  }
 
 }

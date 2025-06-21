@@ -1,0 +1,302 @@
+/* 拖拽编辑器样式 */
+.drag-editor {
+  min-height: 600px;
+  background: #fff;
+}
+
+.drag-editor-toolbar {
+  background: #fafafa;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.drag-editor-content {
+  padding: 24px;
+  min-height: 500px;
+  position: relative;
+}
+
+.drag-editor-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: #999;
+  text-align: center;
+}
+
+.drag-editor-empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+/* 内容块样式 */
+.content-block {
+  position: relative;
+  margin-bottom: 16px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.content-block:hover {
+  border-color: #d9d9d9;
+}
+
+.content-block.selected {
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.content-block.dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+}
+
+.content-block-controls {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.content-block:hover .content-block-controls,
+.content-block.selected .content-block-controls {
+  opacity: 1;
+}
+
+.content-block-drag-handle {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  cursor: move;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 5;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 12px;
+}
+
+.content-block:hover .content-block-drag-handle {
+  opacity: 1;
+}
+
+/* 文本块样式 */
+.text-block {
+  padding: 16px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.text-block-editing {
+  border: 1px solid #1890ff;
+}
+
+.text-block .ant-typography {
+  margin-bottom: 0;
+}
+
+/* 图片块样式 */
+.image-block {
+  text-align: center;
+  padding: 16px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.image-block img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-upload-area {
+  border: 2px dashed #d9d9d9;
+  border-radius: 6px;
+  padding: 40px 20px;
+  text-align: center;
+  background: #fafafa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.image-upload-area:hover {
+  border-color: #1890ff;
+  background: #f0f8ff;
+}
+
+.image-upload-area.dragover {
+  border-color: #1890ff;
+  background: #e6f7ff;
+}
+
+/* 视频块样式 */
+.video-block {
+  text-align: center;
+  padding: 16px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.video-block video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 按钮块样式 */
+.button-block {
+  text-align: center;
+  padding: 16px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+/* 分割线块样式 */
+.divider-block {
+  padding: 16px 0;
+  background: #fff;
+}
+
+/* 间距块样式 */
+.spacer-block {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(0, 0, 0, 0.05) 10px,
+    rgba(0, 0, 0, 0.05) 20px
+  );
+  border-radius: 4px;
+  position: relative;
+  min-height: 20px;
+}
+
+.spacer-block::after {
+  content: '间距';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #666;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.spacer-block:hover::after {
+  opacity: 1;
+}
+
+/* 拖拽占位符样式 */
+.drop-placeholder {
+  height: 4px;
+  background: #1890ff;
+  border-radius: 2px;
+  margin: 8px 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.drop-placeholder.active {
+  opacity: 1;
+}
+
+/* 预览模式样式 */
+.preview-mode {
+  background: #fff;
+  padding: 24px;
+}
+
+.preview-mode .content-block {
+  border: none;
+  margin-bottom: 16px;
+}
+
+.preview-mode .content-block:hover {
+  border: none;
+}
+
+.preview-mode .content-block-controls,
+.preview-mode .content-block-drag-handle {
+  display: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .drag-editor-toolbar {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+  
+  .drag-editor-content {
+    padding: 16px;
+  }
+  
+  .content-block-controls {
+    top: -8px;
+    right: -8px;
+  }
+  
+  .image-upload-area {
+    padding: 30px 15px;
+  }
+}
+
+/* 加载状态 */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content-block {
+  animation: fadeIn 0.3s ease;
+}
+
+/* 拖拽时的样式 */
+.drag-preview {
+  background: #fff;
+  border: 2px solid #1890ff;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: rotate(5deg);
+  opacity: 0.9;
+}
