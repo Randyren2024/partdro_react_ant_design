@@ -62,7 +62,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onCancel }) => {
         >
           <Input
             prefix={<UserOutlined />}
-            placeholder="admin@partdro.com"
+            placeholder="请输入邮箱地址"
             autoComplete="email"
           />
         </Form.Item>
@@ -112,13 +112,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onCancel }) => {
         )}
       </Form>
 
-      <div className="mt-6 text-center">
-        <Text type="secondary" className="text-sm">
-          <strong>测试账户:</strong><br />
-          邮箱: admin@partdro.com<br />
-          密码: admin123
-        </Text>
-      </div>
+
     </Card>
   );
 };
