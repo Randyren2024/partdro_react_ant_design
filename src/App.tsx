@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Layout, Spin } from 'antd';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -25,9 +25,19 @@ import './i18n';
 
 const { Content } = Layout;
 
+
+
 function AppContent() {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    window.dataLayer.push({
+      event: 'pageview',
+      page: location.pathname + location.search,
+    });
+  }, [location]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
