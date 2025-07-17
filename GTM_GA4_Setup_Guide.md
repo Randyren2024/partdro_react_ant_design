@@ -12,6 +12,8 @@ The ContactForm component now includes enhanced data layer tracking for:
 - Validation errors
 - Performance metrics (timing)
 
+**注意：** 本指南已更新为使用现有的GA4 Event Tag "GA Event_lead_form_submission"来处理表单提交事件，而不是创建新的标签。这样可以更好地利用已有的配置并保持一致性。
+
 ## Data Layer Events
 
 The following events are pushed to the data layer:
@@ -55,7 +57,7 @@ The following events are pushed to the data layer:
 #### Submission Success
 ```javascript
 {
-  event: 'contact_form_submission_success',
+  event: 'lead_form_submission',
   form_location: 'page_name',
   user_name: 'user_input',
   user_email: 'user_input',
@@ -179,9 +181,9 @@ Create the following Custom Event triggers:
    - Trigger Type: Custom Event
    - Event Name: `contact_form_submission_attempt`
 
-4. **Trigger - Contact Form Submission Success**
+4. **Trigger - Lead Form Submission**
    - Trigger Type: Custom Event
-   - Event Name: `contact_form_submission_success`
+   - Event Name: `lead_form_submission`
 
 5. **Trigger - Contact Form Submission Error**
    - Trigger Type: Custom Event
@@ -195,9 +197,20 @@ Create the following Custom Event triggers:
    - Trigger Type: Custom Event
    - Event Name: `contact_form_validation_error`
 
-### Step 3: Create GA4 Event Tags
+### Step 3: 配置现有的GA4 Event Tag
 
-Create the following GA4 Event tags:
+使用现有的GA4 Event Tag "GA Event_lead_form_submission"来处理表单提交事件：
+
+#### 配置现有标签 "GA Event_lead_form_submission"
+- **标签类型:** 已存在的GA4 Event Tag
+- **事件名称:** `lead_form_submission`
+- **触发器配置:** 添加以下触发器到现有标签
+  - Trigger - Lead Form Submission
+  - Trigger - Contact Form Submission Attempt
+
+#### 为其他事件创建额外的GA4标签（可选）
+
+如果需要跟踪更详细的表单交互，可以创建以下额外标签：
 
 #### 1. GA4 - Contact Form View
 - **Tag Type:** Google Analytics: GA4 Event
@@ -218,22 +231,7 @@ Create the following GA4 Event tags:
   - `form_location`: {{DLV - Form Location}}
 - **Trigger:** Trigger - Form Field Interaction
 
-#### 3. GA4 - Contact Form Submission Success
-- **Tag Type:** Google Analytics: GA4 Event
-- **Configuration Tag:** {{GA4 Configuration Tag}}
-- **Event Name:** `contact_form_submission`
-- **Event Parameters:**
-  - `form_location`: {{DLV - Form Location}}
-  - `submission_time`: {{DLV - Submission Time}}
-  - `total_form_time`: {{DLV - Total Form Time}}
-  - `message_length`: {{DLV - Message Length}}
-  - `event_category`: {{DLV - Event Category}}
-  - `event_label`: {{DLV - Event Label}}
-  - `value`: 1
-  - `currency`: USD
-- **Trigger:** Trigger - Contact Form Submission Success
-
-#### 4. GA4 - Contact Form Error
+#### 3. GA4 - Contact Form Error
 - **Tag Type:** Google Analytics: GA4 Event
 - **Configuration Tag:** {{GA4 Configuration Tag}}
 - **Event Name:** `contact_form_error`
@@ -244,7 +242,7 @@ Create the following GA4 Event tags:
   - `event_label`: {{DLV - Event Label}}
 - **Trigger:** Trigger - Contact Form Submission Error
 
-#### 5. GA4 - Contact Form Abandonment
+#### 4. GA4 - Contact Form Abandonment
 - **Tag Type:** Google Analytics: GA4 Event
 - **Configuration Tag:** {{GA4 Configuration Tag}}
 - **Event Name:** `contact_form_abandonment`
@@ -253,7 +251,7 @@ Create the following GA4 Event tags:
   - `time_on_form`: {{DLV - Total Form Time}}
 - **Trigger:** Trigger - Contact Form Abandonment
 
-#### 6. GA4 - Contact Form Validation Error
+#### 5. GA4 - Contact Form Validation Error
 - **Tag Type:** Google Analytics: GA4 Event
 - **Configuration Tag:** {{GA4 Configuration Tag}}
 - **Event Name:** `contact_form_validation_error`
@@ -299,14 +297,14 @@ If you prefer to use GTM's built-in Form Submission trigger:
 ## GA4 Analysis and Reporting
 
 ### Custom Events to Track
-- **Contact Form Completion Rate:** `contact_form_submission_success` / `contact_form_view`
+- **Contact Form Completion Rate:** `lead_form_submission` / `contact_form_view`
 - **Form Abandonment Rate:** `contact_form_abandonment` / `contact_form_view`
 - **Field Interaction Patterns:** Analyze `form_field_interaction` events
 - **Form Performance:** Monitor `submission_time` and `total_form_time`
 - **Error Analysis:** Track `contact_form_submission_error` and `contact_form_validation_error`
 
 ### Recommended GA4 Conversions
-1. Set `contact_form_submission` as a conversion event
+1. Set `lead_form_submission` as a conversion event
 2. Create audiences based on form interactions
 3. Set up custom reports for form performance analysis
 
