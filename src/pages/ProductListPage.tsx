@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Row, Col, Spin, Empty, Typography, Space, Pagination, message } from 'antd';
+import { Row, Col, Spin, Empty, Typography, Space, Pagination, message, Card } from 'antd';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
@@ -10,6 +10,7 @@ import ProductSort from '../components/Product/ProductSort';
 import Breadcrumb from '../components/Layout/Breadcrumb';
 import { Product, FilterOptions } from '../types/product';
 import { ProductService } from '../services/productService';
+import ContactForm from '../components/common/ContactForm';
 
 const { Title } = Typography;
 
@@ -260,6 +261,13 @@ const ProductListPage: React.FC = () => {
             </>
           )}
         </Col>
+        {/* Contact Section */}
+        <Card 
+          title={t('contact.title') || 'Contact Us'}
+          className={`mt-8 ${isDark ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}
+        >
+          <ContactForm pageName="Product List Page" />
+        </Card>
       </Row>
     </div>
   );

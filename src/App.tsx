@@ -17,6 +17,8 @@ import EditorPage from './pages/EditorPage';
 import ProductEditPage from './pages/ProductEditPage';
 import UnifiedProductEditPage from './pages/UnifiedProductEditPage';
 import ProductManagePage from './pages/ProductManagePage';
+import ContactPage from './pages/ContactPage';
+import AboutPage from './pages/AboutPage';
 import { 
   shouldRedirectToWww, 
   getWwwUrl 
@@ -82,6 +84,8 @@ function AppContent() {
                 <Route path="/admin/products/new/edit" element={<UnifiedProductEditPage />} />
                 <Route path="/admin/products/:id/edit" element={<UnifiedProductEditPage />} />
                 <Route path="/admin/products/legacy/:id/edit" element={<ProductEditPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/about" element={<AboutPage />} />
               </Routes>
             </Suspense>
           </Content>

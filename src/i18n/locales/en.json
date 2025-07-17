@@ -75,5 +75,21 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "address": "Shijijinyuan, Hangzhou Bay Area, Ningbo City"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Your Name",
+    "namePlaceholder": "Enter your name",
+    "nameRequired": "Please enter your name",
+    "email": "Your Email",
+    "emailPlaceholder": "Enter your email",
+    "emailRequired": "Please enter your email",
+    "emailInvalid": "Please enter a valid email",
+    "message": "Your Message",
+    "messagePlaceholder": "Enter your message",
+    "messageRequired": "Please enter your message",
+    "submit": "Submit",
+    "success": "Message sent successfully!",
+    "error": "Error sending message."
   }
 }

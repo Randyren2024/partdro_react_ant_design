@@ -11,6 +11,7 @@ import th from './locales/th.json';
 import pt from './locales/pt.json';
 import it from './locales/it.json';
 import fr from './locales/fr.json';
+import zh from './locales/zh.json';
 
 const resources = {
   en: { translation: en },
@@ -22,6 +23,7 @@ const resources = {
   pt: { translation: pt },
   it: { translation: it },
   fr: { translation: fr },
+  zh: { translation: zh },
 };
 
 // 添加自定义子域名检测器

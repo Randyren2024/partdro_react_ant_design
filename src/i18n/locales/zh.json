@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "home": "首页",
+    "drones": "无人机",
+    "robots": "机器人",
+    "search": "搜索产品...",
+    "language": "语言",
+    "theme": "主题"
+  },
+  "categories": {
+    "drones": "无人机",
+    "robots": "机器人",
+    "agricultural": "农业",
+    "industrial": "工业",
+    "other": "其他"
+  },
+  "product": {
+    "specifications": "规格",
+    "features": "特性",
+    "inquireNow": "立即咨询",
+    "relatedProducts": "相关产品",
+    "category": "类别",
+    "tags": "标签"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "加载数据错误",
+    "noResults": "未找到产品",
+    "filter": "筛选",
+    "sort": "排序",
+    "clear": "清除",
+    "searching": "搜索中..."
+  },
+  "home": {
+    "hero": {
+      "title": "用",
+      "brand": "partdro",
+      "subtitle": "探索我们创新的无人机和机器人解决方案，为各种行业提供精确、性能和可靠性。",
+      "exploreDrones": "探索无人机",
+      "viewRobots": "查看机器人"
+    },
+    "features": {
+      "title": "为什么选择 partdro？",
+      "subtitle": "我们在每个产品中提供卓越，结合创新和可靠性以满足现代行业需求。",
+      "advancedTech": {
+        "title": "先进技术",
+        "description": "前沿无人机和机器人，集成最新 AI"
+      },
+      "industrialGrade": {
+        "title": "工业级",
+        "description": "为专业和工业应用而建"
+      },
+      "customizable": {
+        "title": "可定制",
+        "description": "为您的特定需求量身定制解决方案"
+      },
+      "globalSupport": {
+        "title": "全球支持",
+        "description": "全球服务和支持网络"
+      }
+    },
+    "categories": {
+      "title": "产品类别",
+      "subtitle": "探索我们全面的专业无人机和先进机器人解决方案范围。",
+      "dronesDescription": "用于农业、测量和工业应用的专业的无人机",
+      "robotsDescription": "用于自动化和专业任务的先进机器人解决方案",
+      "explore": "探索"
+    }
+  },
+  "footer": {
+    "company": "TechDrone Solutions",
+    "description": "商业和工业应用先进无人机和机器人解决方案的领先提供商。",
+    "contact": "联系我们",
+    "about": "关于",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "address": "宁波市杭州湾新区世纪金源"
+  },
+  "contact": {
+    "title": "联系我们",
+    "name": "您的姓名",
+    "namePlaceholder": "输入您的姓名",
+    "nameRequired": "请输入您的姓名",
+    "email": "您的邮箱",
+    "emailPlaceholder": "输入您的邮箱",
+    "emailRequired": "请输入您的邮箱",
+    "emailInvalid": "请输入有效的邮箱",
+    "message": "您的消息",
+    "messagePlaceholder": "输入您的消息",
+    "messageRequired": "请输入您的消息",
+    "submit": "提交",
+    "success": "消息发送成功！",
+    "error": "发送消息错误。"
+  }
+}

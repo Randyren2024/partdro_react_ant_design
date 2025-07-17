@@ -30,6 +30,7 @@ import Breadcrumb from '../components/Layout/Breadcrumb';
 import { Product } from '../types/product';
 import { ProductService } from '../services/productService';
 import { isUUID } from '../utils/urlUtils';
+import ContactForm from '../components/common/ContactForm';
 
 const { Title, Paragraph, Text } = Typography;
 const { TextArea } = Input;
@@ -402,6 +403,13 @@ const ProductDetailPage: React.FC = () => {
           </Form.Item>
         </Form>
       </Modal>
+      {/* Contact Form */}
+      <Card 
+        title={t('contact.title')}
+        className={`mt-6 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white'}`}
+      >
+        <ContactForm pageName={`Product Detail - ${getLocalizedText(product.name_i18n || {}, product.name)}`} />
+      </Card>
     </div>
   );
 };
