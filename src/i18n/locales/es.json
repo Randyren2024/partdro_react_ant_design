@@ -29,7 +29,9 @@
     "filter": "Filtrar",
     "sort": "Ordenar",
     "clear": "Limpiar",
-    "searching": "Buscando..."
+    "searching": "Buscando...",
+    "messageRequired": "Por favor, ingrese su mensaje",
+    "messageMin": "El mensaje debe tener al menos 10 caracteres."
   },
   "home": {
     "hero": {

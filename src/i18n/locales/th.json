@@ -29,7 +29,9 @@
     "filter": "กรอง",
     "sort": "เรียงลำดับ",
     "clear": "ล้าง",
-    "searching": "กำลังค้นหา..."
+    "searching": "กำลังค้นหา...",
+    "messageRequired": "กรุณาใส่ข้อความของคุณ",
+    "messageMin": "ข้อความต้องมีความยาวอย่างน้อย 10 ตัวอักษร"
   },
   "footer": {
     "company": "TechDrone Solutions",

@@ -88,6 +88,7 @@
     "message": "您的消息",
     "messagePlaceholder": "输入您的消息",
     "messageRequired": "请输入您的消息",
+    "messageMin": "消息长度至少需要10个字符。",
     "submit": "提交",
     "success": "消息发送成功！",
     "error": "发送消息错误。"

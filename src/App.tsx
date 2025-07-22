@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { Layout, Spin } from 'antd';
+import { Layout, Spin, App as AntApp } from 'antd';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { LanguageProvider } from './contexts/LanguageContext';
@@ -62,6 +62,7 @@ function AppContent() {
   }, []);
 
   return (
+    <AntApp>
         <Layout className="min-h-screen">
           <Header onSearch={handleSearch} searchValue={searchQuery} />
           <Content className="flex-1">
@@ -92,6 +93,7 @@ function AppContent() {
           <Footer />
           <WhatsAppButton phoneNumber="8613362853598" />
         </Layout>
+    </AntApp>
   );
 }
 

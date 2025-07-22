@@ -88,6 +88,7 @@
     "message": "Your Message",
     "messagePlaceholder": "Enter your message",
     "messageRequired": "Please enter your message",
+    "messageMin": "Message must be at least 10 characters long.",
     "submit": "Submit",
     "success": "Message sent successfully!",
     "error": "Error sending message."

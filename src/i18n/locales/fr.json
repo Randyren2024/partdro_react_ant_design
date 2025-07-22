@@ -75,5 +75,16 @@
      "privacy": "Politique de confidentialité",
      "terms": "Conditions de service",
      "address": "Shijijinyuan, Zone de la Baie de Hangzhou, Ville de Ningbo"
-   }
+   },
+  "contact": {
+    "title": "Contactez-nous",
+    "name": "Votre nom",
+    "email": "Votre e-mail",
+    "message": "Votre message",
+    "messageRequired": "Veuillez saisir votre message",
+    "messageMin": "Le message doit comporter au moins 10 caractères.",
+    "submit": "Envoyer",
+    "success": "Message envoyé avec succès !",
+    "error": "Erreur lors de l'envoi du message."
+  }
  }

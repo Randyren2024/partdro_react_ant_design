@@ -29,7 +29,9 @@
     "filter": "Filtra",
     "sort": "Ordina",
     "clear": "Cancella",
-    "searching": "Ricerca in corso..."
+    "searching": "Ricerca in corso...",
+    "messageRequired": "Inserisci il tuo messaggio",
+    "messageMin": "Il messaggio deve contenere almeno 10 caratteri."
   },
   "footer": {
     "company": "TechDrone Solutions",

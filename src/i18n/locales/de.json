@@ -29,7 +29,9 @@
     "filter": "Filter",
     "sort": "Sortieren",
     "clear": "Löschen",
-    "searching": "Suchen..."
+    "searching": "Suchen...",
+    "messageRequired": "Bitte geben Sie Ihre Nachricht ein",
+    "messageMin": "Die Nachricht muss mindestens 10 Zeichen lang sein."
   },
   "home": {
     "hero": {
