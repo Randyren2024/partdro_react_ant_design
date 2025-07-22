@@ -200,21 +200,25 @@
                 "containerId": "224827946",
                 "triggerId": "6",
                 "name": "Lead Form Submission Trigger",
-                "type": "FORM_SUBMISSION",
-                "waitForTags": {
-                    "type": "TEMPLATE"
-                },
-                "checkValidation": {
-                    "type": "TEMPLATE"
-                },
-                "waitForTagsTimeout": {
-                    "type": "TEMPLATE",
-                    "value": "2000"
-                },
-                "uniqueTriggerId": {
-                    "type": "TEMPLATE"
-                },
-                "fingerprint": "1752738669217"
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "lead_form_submission"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1753175000000"
             },
             {
                 "accountId": "6008946204",
