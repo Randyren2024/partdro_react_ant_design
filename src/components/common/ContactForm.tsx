@@ -123,7 +123,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ pageName, onSubmitSuccess }) 
       // Track successful submission
       const submissionTime = Date.now() - submissionStartTime;
       window.dataLayer.push({
-        event: 'contact_form_submission_success',
+        event: 'lead_form_submission',
         form_location: pageName,
         user_name: values.name || '',
         user_email: values.email || '',
