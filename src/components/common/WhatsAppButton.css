@@ -15,9 +15,8 @@
 }
 
 .whatsapp-icon {
-  width: 35px;
-  height: 35px;
-  filter: invert(100%); /* Make the SVG white */
+  width: 40px;
+  height: 40px;
 }
 
 @keyframes pulse {
